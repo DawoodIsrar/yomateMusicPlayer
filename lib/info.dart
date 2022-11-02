@@ -1,31 +1,14 @@
-import 'dart:developer';
-import 'dart:io';
 import 'package:bitslogicxplayer/Audio/songs.dart';
 import 'package:bitslogicxplayer/Network/dmp3.dart';
-import 'package:bitslogicxplayer/Network/downloading_dialog.dart';
-import 'package:bitslogicxplayer/Network/downloadmp3.dart';
 import 'package:bitslogicxplayer/Network/dv.dart';
-import 'package:bitslogicxplayer/Network/playonline.dart';
-import 'package:bitslogicxplayer/Video/custom_video_tiles.dart';
 import 'package:bitslogicxplayer/Video/folders.dart';
-import 'package:bitslogicxplayer/Video/new.dart';
-import 'package:bitslogicxplayer/Video/videoHome.dart';
-import 'package:bitslogicxplayer/Video/videos.dart';
-import 'package:bitslogicxplayer/audio_main.dart';
-import 'package:bitslogicxplayer/features/shared/ui/screens/AllSongs.dart';
-import 'package:bitslogicxplayer/futurelist.dart';
-import 'package:bitslogicxplayer/newFile.dart';
-import 'package:bitslogicxplayer/Network/playonline.dart';
 import 'package:bitslogicxplayer/thum.dart';
-import 'package:bitslogicxplayer/thumbnail.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:file_picker/file_picker.dart';
-import 'package:on_audio_query/on_audio_query.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:just_audio/just_audio.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import 'LaunchedYoutube.dart';
 
 class Info extends StatefulWidget {
   const Info({Key? key}) : super(key: key);
@@ -35,52 +18,59 @@ class Info extends StatefulWidget {
 }
 
 class _InfoState extends State<Info> {
-  int _selectedIndex = 0;
   static const TextStyle optionStyle = TextStyle(
     fontSize: 30,
     fontWeight: FontWeight.bold,
   );
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Videos',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 1: Audios',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 2: Folders',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 3: Network',
-      style: optionStyle,
-    ),
+  int _selectedIndex = 0;
+  final List<Widget> _widgetOptions = <Widget>[
+    TFF(),
+    SongList(),
+    Folders(),
+    LaunchedYoutube()
+
+    // Text(
+    //   'Index 0: Videos',
+    //   style: optionStyle,
+    // ),
+    // Text(
+    //   'Index 1: Audios',
+    //   style: optionStyle,
+    // ),
+    // Text(
+    //   'Index 2: Folders',
+    //   style: optionStyle,
+    // ),
+    // Text(
+    //   'Index 3: Network',
+    //   style: optionStyle,
+    // ),
   ];
 
   void _onItemTapped(int index) {
     setState(() {
+      //to add fragmeng into this
       _selectedIndex = index;
-      print(index);
-      if (index == 0) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => TFF()),
-        );
-      } else if (index == 1) {
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => SongList()));
-      } else if (index == 2) {
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => Folders()));
-      } else if (index == 3) {
-        launchedYoutube(urly);
-      }
+      // print(index);
+      // if (index == 0) {
+      //   Navigator.push(
+      //     context,
+      //     MaterialPageRoute(builder: (context) => TFF()),
+      //   );
+      // } else if (index == 1) {
+      //   Navigator.of(context)
+      //       .push(MaterialPageRoute(builder: (context) => SongList()));
+      // } else if (index == 2) {
+      //   Navigator.of(context)
+      //       .push(MaterialPageRoute(builder: (context) => Folders()));
+      // } else if (index == 3) {
+      //   launchedYoutube(urly);
+      // }
     });
   }
 
   String urlm = "https://www.acethinker.com/url-to-mp3";
+
   Future<void> launchedMp3(String urlm) async {
     if (await canLaunch(urlm)) {
       await launch(urlm,
@@ -89,6 +79,7 @@ class _InfoState extends State<Info> {
   }
 
   String urly = "https://www.youtube.com/";
+
   Future<void> launchedYoutube(String urly) async {
     if (await canLaunch(urly)) {
       await launch(urly,
@@ -105,6 +96,7 @@ class _InfoState extends State<Info> {
           'Yomate Player',
         ),
       ),
+
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
@@ -228,40 +220,41 @@ class _InfoState extends State<Info> {
           ],
         ),
       ),
-      body: SafeArea(
-        child: Container(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Image.asset(
-                "assets/ylogo.png",
-                alignment: Alignment.center,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  children: [
-                    Text(
-                      "A music Player is the Sound Track of your life     (-Dick clark).",
-                      style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                          fontStyle: FontStyle.italic),
-                    ),
-                    Text(
-                      "BitLogicx Music Player plays your mp3,mp4 songs, recordings, and other audio and video with the passion and quality of good Sound and picture.",
-                      style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                          fontStyle: FontStyle.italic),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+      body: _widgetOptions[_selectedIndex],
+      // body: SafeArea(
+      //   child: Container(
+      //     child: Column(
+      //       mainAxisAlignment: MainAxisAlignment.start,
+      //       children: [
+      //         Image.asset(
+      //           "assets/ylogo.png",
+      //           alignment: Alignment.center,
+      //         ),
+      //         Padding(
+      //           padding: const EdgeInsets.all(20),
+      //           child: Column(
+      //             children: [
+      //               Text(
+      //                 "A music Player is the Sound Track of your life     (-Dick clark).",
+      //                 style: TextStyle(
+      //                     fontSize: 15,
+      //                     fontWeight: FontWeight.bold,
+      //                     fontStyle: FontStyle.italic),
+      //               ),
+      //               Text(
+      //                 "BitLogicx Music Player plays your mp3,mp4 songs, recordings, and other audio and video with the passion and quality of good Sound and picture.",
+      //                 style: TextStyle(
+      //                     fontSize: 15,
+      //                     fontWeight: FontWeight.bold,
+      //                     fontStyle: FontStyle.italic),
+      //               ),
+      //             ],
+      //           ),
+      //         ),
+      //       ],
+      //     ),
+      //   ),
+      // ),
     );
   }
 }

@@ -200,25 +200,29 @@ class HomePage extends StatelessWidget {
               ListTile(
                   title: Text("Name"),
                   onTap: () {
-                    controller.sortedBy = SortBy.name;
+                    // controller.sortedBy = SortBy.name;
+                    controller.sortBy(SortBy.name);
                     Navigator.pop(context);
                   }),
               ListTile(
                   title: Text("Size"),
                   onTap: () {
-                    controller.sortedBy = SortBy.size;
+                    controller.sortBy(SortBy.size);
+                    // controller.sortedBy = SortBy.size;
                     Navigator.pop(context);
                   }),
               ListTile(
                   title: Text("Date"),
                   onTap: () {
-                    controller.sortedBy = SortBy.date;
+                    controller.sortBy(SortBy.date);
+                    // controller.sortedBy = SortBy.date;
                     Navigator.pop(context);
                   }),
               ListTile(
                   title: Text("type"),
                   onTap: () {
-                    controller.sortedBy = SortBy.type;
+                    controller.sortBy(SortBy.type);
+                    // controller.sortedBy = SortBy.type;
                     Navigator.pop(context);
                   }),
             ],

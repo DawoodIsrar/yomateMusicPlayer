@@ -48,10 +48,10 @@ class _SongListState extends State<SongList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("YoMate MP3"),
-          backgroundColor: Colors.lightBlue[200],
-        ),
+        // appBar: AppBar(
+        //   title: Text("YoMate MP3"),
+        //   backgroundColor: Colors.lightBlue[200],
+        // ),
         body: FutureBuilder<List<SongModel>>(
           future: audioQuery.querySongs(
             sortType: null,

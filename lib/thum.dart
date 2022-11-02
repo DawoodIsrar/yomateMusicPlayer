@@ -141,21 +141,21 @@ class _MyFileList extends State<MyFileList> {
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          iconTheme: IconThemeData(
-            color: Colors.white,
-          ),
-          leading: IconButton(
-              icon: Icon(Icons.arrow_back, color: Colors.white),
-              onPressed: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) => Info()));
-              }),
-          backgroundColor: Colors.lightBlue[200],
-          title: Text(
-            'YoMate Device videos',
-          ),
-        ),
+        // appBar: AppBar(
+        //   iconTheme: IconThemeData(
+        //     color: Colors.white,
+        //   ),
+        //   leading: IconButton(
+        //       icon: Icon(Icons.arrow_back, color: Colors.white),
+        //       onPressed: () {
+        //         Navigator.of(context)
+        //             .push(MaterialPageRoute(builder: (context) => Info()));
+        //       }),
+        //   backgroundColor: Colors.lightBlue[200],
+        //   title: Text(
+        //     'YoMate Device videos',
+        //   ),
+        // ),
         body: files == null
             ? Center(child: CircularProgressIndicator())
             : ListView.builder(
